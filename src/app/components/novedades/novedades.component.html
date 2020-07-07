@@ -1,0 +1,41 @@
+<div *ngIf="loginService.userLogged.perfil == 'P'">
+<div class="contenedor">
+    <br><form class="card text-white bg-dark mb-3" #novedadForm="ngForm">
+        <div class="card-header alert-link alert-primary text-center h2">Novedades</div>
+        <div class="card-body">
+            <!-- <div class="row form-group">
+                <label class="col-sm-12 col-md-2">De</label>
+                <input class="form-control col-sm-12 col-md-8" type="text" name="usuario1" [(ngModel)]="novedad.usuarios.usuario" placeholder="Ingrese su Usuario" #usuario1="ngModel" required/>
+            </div> -->
+            <label>Tu Mensaje: </label>
+            <div class="row form-group">
+                <textarea class="form-control col-sm-12 col-md-10" [maxlength]="tamMaxText" rows="5" name="texto" [(ngModel)]="novedad.texto" (ngModelChange)="cambiarTamTexto()" placeholder="Escriba el Mensaje..." #texto="ngModel" required></textarea>
+            </div>
+            <div class="row form-group">
+              <div class="col-2"></div>
+              <button type="button" class="btn btn-primary col-3 alert-link" [disabled]="novedadForm.invalid" (click)= "guardarNovedad()">Enviar</button>
+              <div class="col-2"></div>
+              <button type="reset" class="btn btn-primary col-3 alert-link" (click)="limpiarNovedad()">Limpiar</button>
+              <div class="col-2"></div>
+            </div>
+        </div>
+    </form>
+    <div class="row"><h3 class="alert alert-primary col-12 text-center">Listado de Novedades</h3></div>
+    <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">De</th>
+            <th scope="col">Texto</th>
+            <th scope="col">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of novedades">
+            <td>{{item.usuarios.usuario}}</td>
+            <td>{{item.texto}}</td>
+            <td>{{item.estado}}</td>
+          </tr>
+        </tbody>
+    </table>
+</div>
+</div>

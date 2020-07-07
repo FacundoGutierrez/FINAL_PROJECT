@@ -1,15 +1,15 @@
 export class Propietario {
-    id: number
+    _id: number
     apellido: string
     nombres: string
     dni: number
     email: string
     teléfono: number
 
-    constructor(id?:number, apellido?:string, nombres?:string, dni?:number, email?:string,telefono?:number){
+    constructor(_id?:number, apellido?:string, nombres?:string, dni?:number, email?:string,telefono?:number){
 
 
-        this.id= id;
+        this._id= _id;
         this.apellido = apellido;
         this.nombres= nombres;
         this.dni = dni;

@@ -12,11 +12,11 @@ export class LoginComponent implements OnInit {
  userform: Usuario = new Usuario();
  returnUrl: string;
  msglogin: string;
- constructor( private route: ActivatedRoute, private router: Router, private loginService:LoginService)
+ constructor( private route: ActivatedRoute, private router: Router, public loginService:LoginService)
  {}
  ngOnInit() 
  {
- this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
+ this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/usuarios';
  }
  login() 
   {

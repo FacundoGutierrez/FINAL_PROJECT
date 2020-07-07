@@ -9,6 +9,8 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { LoginService } from './services/login.service';
 import { LoginComponent } from './components/login/login.component';
+import { NovedadesComponent } from './components/novedades/novedades.component';
+import { LocalesComponent } from './components/locales/locales.component';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { LoginComponent } from './components/login/login.component';
     HeaderComponent,
     FooterComponent,
     UsuariosComponent,
-    LoginComponent
+    LoginComponent,
+    NovedadesComponent,
+    LocalesComponent
   ],
   imports: [
     BrowserModule,

@@ -43,7 +43,6 @@ export class UsuariosComponent implements OnInit {
       (error)=>{
         console.log(error);
       }
-    
     )
 
     this.refrescarUsuarios();
