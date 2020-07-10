@@ -13,6 +13,7 @@ import { LoginService } from 'src/app/services/login.service';
 export class UsuariosComponent implements OnInit {
 
   usuario: Usuario;
+  usuario1: Usuario;
   usuarios: Array<Usuario>;
   
   submited: boolean;
@@ -21,8 +22,8 @@ export class UsuariosComponent implements OnInit {
   constructor(private usuarioService: UsuarioService, public loginService:LoginService ) { 
    this.usuario = new Usuario();
    this.usuarios= new Array<Usuario>();
-
-    this.usuario.usuario
+    this.usuario1= new Usuario();
+    
     this.refrescarUsuarios();
     
 

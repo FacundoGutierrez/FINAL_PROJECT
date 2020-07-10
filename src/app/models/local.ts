@@ -1,15 +1,15 @@
 export class Local {
     
     
-    id: number
+    _id: string
     superficie: number
     imagen: string
-    alquilado: boolean
+    alquilado: boolean = false
     costoMes: number
 
-    constructor(id?:number,superficie?:number,imagen?:string,alquilado?:boolean,costoMes?:number){
+    constructor(_id?:string,superficie?:number,imagen?:string,alquilado?:boolean,costoMes?:number){
 
-        this.id = id;
+        this._id = _id;
         this.superficie=superficie;
         this.imagen=imagen;
         this.alquilado = alquilado;

@@ -3,14 +3,14 @@ import { Local } from './local'
 
 export class Contrato {
 
-        id: number
+        _id: number
         fecha: Date
         propietario: Propietario
         locales: Array<Local>
         costoTotalAlq: number
 
-        constructor(id?:number,fecha?:Date,propietario?:Propietario, locales?:Array<Local>,costoTotalAlq?:number){
-            this.id = id;
+        constructor(_id?:number,fecha?:Date,propietario?:Propietario, locales?:Array<Local>,costoTotalAlq?:number){
+            this._id = _id;
             this.fecha = fecha;
             this.propietario = propietario;
             this.locales = locales;

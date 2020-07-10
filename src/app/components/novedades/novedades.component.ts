@@ -13,6 +13,7 @@ import { LoginService } from 'src/app/services/login.service';
 export class NovedadesComponent implements OnInit {
   
   usuario: Usuario;
+
   novedad : Novedad;
   novedades: Array<Novedad>;
   submited: boolean;
@@ -20,7 +21,7 @@ export class NovedadesComponent implements OnInit {
   tamText :number;
 
 
-  constructor(private novedadService: NovedadService, private loginService: LoginService) { 
+  constructor(private novedadService: NovedadService, public loginService: LoginService) { 
 
     this.novedad = new Novedad();
     
@@ -67,7 +68,16 @@ export class NovedadesComponent implements OnInit {
     this.novedades = new Array<Novedad>();
     this.novedadService.getNovedades().subscribe(
       (result)=>{
-        Object.assign(this.novedades, result)
+        let r = new Novedad();
+        for(let i in result)
+        {
+          Object.assign(r, result[i])
+          if(r.usuarios != null)
+          {
+            this.novedades.push(r);
+          }
+          r = new Novedad();
+        }
       },
       (error)=>{
         console.log(error);

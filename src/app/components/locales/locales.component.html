@@ -1,1 +1,86 @@
-<p>locales works!</p>
+<div *ngIf="loginService.userLogged.perfil == 'a' || 'A'">
+    <div class="row">
+        <form class="col-md-10 offset-1 "  action="" #formLocal="ngForm"  id="printJS-form">
+            <h2 class="text-center"> Locales </h2>
+            
+            <div class="form-group row">
+                <label for="idSuperficie" class="col-md-4">Superficie</label>
+                <input id="idSuperficie" class="form-control form-control-sm col-md-8" required
+                    type="number" name="superficie" #superficie="ngModel"
+                    [(ngModel)]="local.superficie"/>
+            </div>
+            <div *ngIf="superficie.invalid && (superficie.dirty || superficie.touched)" class="alert alert-danger">
+              <div *ngIf="superficie.errors.required">
+                Superficie es requerido.
+              </div>
+            </div> 
+    
+            <div class="form-group row">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFileLang" lang="es" alife-file-to-base64
+                      (onFileChanged)="cambioImg($event,'localnuevo')">
+                    <label class="custom-file-label" for="customFileLang">Seleccionar una Imagen</label>
+                  </div>
+                  <div><br>
+                    <img src="{{local.imagen}}" class="card-img" alt="..." height="500px" >
+                    <br></div>
+                  <br>
+            </div>
+    
+            <div class="form-group row">
+                <label for="idAlquilado" class="col-md-4">Alquilado</label>
+                <input id="idAlquilado" class="form-check-input" 
+                  type="checkbox" name="alquilado" #alquilado="ngModel" 
+                      [(ngModel)] = "local.alquilado"/>
+            </div>
+    
+            <div class="form-group row">
+              <label for="idCostoMes" class="col-md-4">Costo por Mes</label>
+              <input id="idCostoMes" class="form-control form-control-sm col-md-8" required
+                    type="number" name="costoMes" #costoMes="ngModel"
+                    [(ngModel)]="local.costoMes"/>
+            </div>
+            <div *ngIf="costoMes.invalid && (costoMes.dirty || costoMes.touched)" class="alert alert-danger">
+              <div *ngIf="costoMes.errors.required">
+                Costo por mes es requerido.
+              </div>
+            </div>         
+    
+            <div class="form-group text-center">
+                <button class="btn btn-secondary ml-2 mr-2" [disabled]="formLocal.invalid"
+                 (click)="guardarLocal()" ><i class="fas fa-save fal"></i> Guardar</button>
+                <button class="btn btn-secondary ml-2 mr-2" (click)="modificarlocal()"><i class="fas fa-save fal"></i> Modificar</button>            
+                <button class="btn btn-secondary ml-2 mr-2"  (click)="limpiarlocal()"><i class="fas fa-brush"></i> Limpiar</button>
+           
+            </div>
+        </form>
+
+        
+        <table class="table" id="tabla" >
+            <thead>
+              <tr>
+                <th scope="col">Superficie</th>
+                <th scope="col">Imagen</th>
+                <th scope="col">Alquilado</th>
+                <th scope="col">Costo por Mes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let variable of locales">
+                <th scope="row">{{variable.superficie}}</th>
+                <td ><img src="{{variable.imagen}}"s alt="" width="50" height="50"></td>
+                <td>{{variable.alquilado}}</td>
+                <td>{{variable.costoMes}}</td>
+                <td> 
+                  <button class="btn btn-primary" (click)="elegirlocal(variable)">Seleccionar</button>
+                  <button class="btn btn-primary" (click)="borrarlocal(variable)">Borrar</button>
+                 
+      
+                 <button type="button" (click)="Print()">imprimir pdf</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          
+    </div>
+  </div>

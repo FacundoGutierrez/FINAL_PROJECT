@@ -11,6 +11,12 @@ import { LoginService } from './services/login.service';
 import { LoginComponent } from './components/login/login.component';
 import { NovedadesComponent } from './components/novedades/novedades.component';
 import { LocalesComponent } from './components/locales/locales.component';
+import { NoticiasComponent } from './components/noticias/noticias.component';
+import { ContratosComponent } from './components/contratos/contratos.component';
+import {AlifeFileToBase64Module} from 'alife-file-to-base64';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr'
+
 
 
 @NgModule({
@@ -21,13 +27,18 @@ import { LocalesComponent } from './components/locales/locales.component';
     UsuariosComponent,
     LoginComponent,
     NovedadesComponent,
-    LocalesComponent
+    LocalesComponent,
+    NoticiasComponent,
+    ContratosComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AlifeFileToBase64Module,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [LoginService],
   bootstrap: [AppComponent]
