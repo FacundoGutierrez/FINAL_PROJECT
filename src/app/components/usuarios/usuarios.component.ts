@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Usuario} from './../../models/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { LoginService } from 'src/app/services/login.service';
+import { PropietariosService } from 'src/app/services/propietarios.service';
+import { Propietario } from 'src/app/models/propietario';
 
 
 
@@ -15,11 +17,15 @@ export class UsuariosComponent implements OnInit {
   usuario: Usuario;
   usuario1: Usuario;
   usuarios: Array<Usuario>;
-  
+
   submited: boolean;
+  propietario: Propietario;
+  propietarios: Array<Propietario>;
+  emails: Array<any>;
 
 
-  constructor(private usuarioService: UsuarioService, public loginService:LoginService ) { 
+
+  constructor(private usuarioService: UsuarioService, public loginService:LoginService, private propietarioService:PropietariosService) { 
    this.usuario = new Usuario();
    this.usuarios= new Array<Usuario>();
     this.usuario1= new Usuario();
@@ -31,6 +37,35 @@ export class UsuariosComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  public cargarPropietarios(){
+    var email: string;
+    this.propietarioService.getPropietarios().subscribe(
+      (result)=>{
+        var afi: Propietario = new Propietario();
+        result.forEach(element => {
+          Object.assign(afi, element);
+          this.emails.push(afi.email);
+          console.log(this.emails.toString())
+          afi = new Propietario();
+        });
+      },
+      (error)=>{
+        console.log(error);
+      }
+    )
+  }
+
+
+
+
+
+
+
+
+
+
+
 
   guardarUsuario(){
   

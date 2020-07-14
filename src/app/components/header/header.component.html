@@ -1,6 +1,6 @@
 <header class="row">
-  <div class="col-md-12 ">
-    <h1 class="text-center ">Galeria LD</h1>
+  <div class="col-md-12">
+    <h1 class="text-center">Galeria LD</h1>
   </div>
   <div class="col-md-12">
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
@@ -10,23 +10,25 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" [routerLink]="['/noticias']" routerLinkActive="router-link-active" >Noticias</a>
+            <a class="nav-link" [routerLink]="['noticias']" routerLinkActive="router-link-active">Noticias</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" [routerLink]="['/locales']" routerLinkActive="router-link-active" >Locales</a>
+            <a class="nav-link" [routerLink]="['locales']" routerLinkActive="router-link-active"*ngIf="loginService.vistaLocales">Locales</a> 
           </li>
           <li class="nav-item active">
-            <a class="nav-link" [routerLink]="['/novedades']" routerLinkActive="router-link-active" >Novedades</a>
+            <a class="nav-link" [routerLink]="['contratos']" routerLinkActive="router-link-active"*ngIf="loginService.vistaContrato">Contratos</a> 
           </li>
           <li class="nav-item active">
-            <a class="nav-link" [routerLink]="['/usuarios']" routerLinkActive="router-link-active" >Usuarios</a>
+            <a class="nav-link" [routerLink]="['novedades']" routerLinkActive="router-link-active"*ngIf="loginService.vistaNovedades">Novedades</a>
           </li>
-          <div>
-            <a *ngIf="!loginService.userLoggedIn" [routerLink]="['login']">(Login)</a>
-            <a *ngIf="loginService.userLoggedIn" [routerLink]="['login']" (click)="logout()">
-                {{loginService.userLogged.usuario}} (logout)
-            </a>
-          </div>
+          <li class="nav-item active">
+            <a class="nav-link" [routerLink]="['usuarios']" routerLinkActive="router-link-active" *ngIf="loginService.vistaUsuarios">Usuarios</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" [routerLink]="['propietarios']" routerLinkActive="router-link-active" *ngIf="loginService.vistaPropietario">Propietarios</a>
+          </li>
+            <a *ngIf="!loginService.userLoggedIn" [routerLink]="['login']">Login</a>
+            <a *ngIf="loginService.userLoggedIn" [routerLink]="['login']" (click)="logout()">Salir</a>
         </ul>
       </div>
     </nav>

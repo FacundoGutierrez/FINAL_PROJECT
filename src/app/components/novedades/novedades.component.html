@@ -1,4 +1,4 @@
-<div *ngIf="loginService.userLogged.perfil == 'P' || 'a' || 'A'">
+<div *ngIf="loginService.userLogged.perfil == 'P' || loginService.userLogged.perfil == 'a' || loginService.userLogged.perfil == 'A' ">
 <div class="contenedor">
     <div *ngIf="loginService.userLogged.perfil == 'P' || 'A'">
     <br><form class="card text-white bg-dark mb-3" #novedadForm="ngForm">
@@ -22,7 +22,7 @@
               <div class="col-2"></div>
             </div>
         </div>
-    </form>
+        </form>
     </div>
     
     <div class="row"><h3 class="alert alert-primary col-12 text-center">Listado de Novedades</h3></div>
@@ -42,6 +42,5 @@
           </tr>
         </tbody>
     </table>
-    
 </div>
 </div>

@@ -1,4 +1,4 @@
-<div *ngIf="loginService.userLogged.perfil == 'a' || 'A'">
+<div *ngIf="loginService.userLogged.perfil == 'a' || loginService.userLogged.perfil == 'A'">
 <div class="row">
     <form class="col-md-10 offset-1"  action="" #formUsuario="ngForm" >
         <h2 class="text-center"> Crear Usuario </h2>
@@ -15,7 +15,7 @@
           <div *ngIf="usuario1.errors.minlength">
             Usuario debe tener al menos 6 caracteres.
           </div>
-        </div> 
+        </div>   
 
         <div class="form-group row">
             <label for="idpassword" class="col-md-4">Password</label>
@@ -39,6 +39,7 @@
                   [(ngModel)] = "usuario.activo"/>
         </div>
 
+
         <div class="form-group row">
           <label for="idsector" class="col-md-4">Perfil</label>
           <select id="idsector" class="form-control form-control-sm col-md-8" required
@@ -49,6 +50,11 @@
                 <option value="s" selected>Seleccionado..</option>
           </select>
         </div>   
+        <div *ngIf="perfil.invalid && (perfil.dirty || perfil.touched)" class="alert alert-danger">
+          <div *ngIf="perfil.errors.required">
+            Perfil es requerido.
+          </div>
+        </div>
 
         <div class="form-group text-center">
             <button class="btn btn-secondary ml-2 mr-2" [disabled]="formUsuario.invalid"
@@ -56,7 +62,7 @@
             <button class="btn btn-secondary ml-2 mr-2" (click)="modificarUsuario()"><i class="fas fa-save fal"></i> Modificar</button>            
             <button class="btn btn-secondary ml-2 mr-2"  (click)="limpiarUsuario()"><i class="fas fa-brush"></i> Limpiar</button>
         </div>
-    </form>
+    
 
     <table class="table">
         <thead>
@@ -75,11 +81,9 @@
             <td>{{variable.activo}}</td>
             <td>{{variable.perfil}}</td>
             <td> 
-              <button class="btn btn-primary" (click)="elegirUsuario(variable)" >Seleccinar</button>
-              <button class="btn btn-primary" (click)="borrarUsuario(variable)" >Borrar</button>
+              <button class="btn btn-primary" (click)="elegirUsuario(variable)">Seleccionar</button>
+              <button class="btn btn-primary" (click)="borrarUsuario(variable)">Borrar</button>
             </td>
           </tr>
         </tbody>
       </table>
-</div>
-</div>

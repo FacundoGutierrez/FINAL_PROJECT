@@ -15,7 +15,5 @@ export class Contrato {
             this.propietario = propietario;
             this.locales = locales;
             this.costoTotalAlq = costoTotalAlq;
-            
-
         }
 }

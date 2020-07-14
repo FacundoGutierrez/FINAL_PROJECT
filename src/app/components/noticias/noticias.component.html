@@ -1,40 +1,89 @@
-<div *ngIf="loginService.userLogged.perfil == 'a' || 'A'">
-<div class="row row-cols-1 row-cols-md-2">
-    <div class="col mb-4">
-      <div class="card">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Local 15</h5>
-          <p class="card-text"></p>
+  <div>
+    <form class="card" #formNoticia="ngForm">
+      <h2 class="alert alert-dark col-12">AGREGAR NOTICIA</h2>
+      <div class="card-body">
+        <div class="row form-group">
+          <label class="col-sm-12 col-md-4" for="Titulo">Titulo:</label>
+          <input class="form-control col-sm-12 col-md-8" type="text" id="titulo" name="titulo" required minlength="6" [(ngModel)] = "noticia.titulo" #titulo="ngModel"/>
+          <div *ngIf="titulo.invalid && (titulo.dirty || titulo.touched)" class="alert alert-danger">
+            <div *ngIf="titulo.errors.required">
+               Ingrese un Titulo
+            </div>
+            <div *ngIf="titulo.errors.minlength">
+              Debe tener 6 digitos.
+            </div>
+          </div>
         </div>
+       
+        <div class="row form-group">
+            <label class="col-sm-12 col-md-4" for="descripcion">Descripcion:</label>
+          <textarea class="form-control" id="descripcion" rows="5" name="descripcion" required minlength="50" [(ngModel)]="noticia.descripcion" #descripcion="ngModel"></textarea>
+          <div *ngIf="descripcion.invalid && (para.dirty || descripcion.touched)" class="alert alert-danger">
+            <div *ngIf="descripcion.errors.required">
+              Debe escribir una Descripcion.
+            </div>
+            <div *ngIf="descripcion.errors.minlength">
+              Como mucho 50 caracteres.
+            </div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <button type="submit" class="btn btn-outline-success " [disabled]="!formNoticia.form.valid" (click)="guardarNoticia()">PUBLICAR</button>
+          <button type="reset" class="btn btn-outline-secondary text-dark" (click)="limpiarForm()">Limpiar</button>            
+        </div>
+      </div>   
+    </form>
+  </div>
+
+
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modificar Noticia:</h5>
+        <button type="button" class="close btn-outline-secondary " data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="text-mensaje" class="col-form-label">Titulo:</label>
+            <input name="textcobrador" type="text" class="form-control" id="text-mensaje" [(ngModel)]="noticia.titulo">
+          </div>
+          <div class="form-group">
+            <label for="text-mensaje" class="col-form-label">Descripcion</label>
+            <input type="number" name="text-monto" class="form-control" id="text-mensaje"[(ngModel)]="noticia.descripcion">
+          </div>
+
+            <div class="form-group">
+              <label  class="col-form-label">Fecha:</label>
+              <input type="date" name="fecha" class="form-control" id="fecha"[(ngModel)]="noticia.fecha" >
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary " data-dismiss="modal" aria-label="Close">Cancelar</button>
+        <button type="button" class="btn btn-outline-success " data-dismiss="modal" (click)= "modificarNoticia()">Guardar</button>
       </div>
     </div>
-    <div class="col mb-4">
-      <div class="card">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Local 23</h5>
-          <p class="card-text"></p>
-        </div>
-      </div>
-    </div>
-    <div class="col mb-4">
-      <div class="card">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Local 9</h5>
-          <p class="card-text"></p>
-        </div>
-      </div>
-    </div>
-    <div class="col mb-4">
-      <div class="card">
-        <img src="..." class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Local 7</h5>
-          <p class="card-text"></p>
-        </div>
-      </div>
-    </div>
+  </div>
 </div>
+
+<div class="container">
+  <section id="section1" *ngIf="mostrarNoticias">
+      <div id="titulo1" style="text-align: center;">Noticias</div>
+      <div class="row form-group col-12">
+        <div class="card col-md-6" *ngFor="let item of noticias">
+          <div class="card-body">
+              <h5 class="card-title">{{item.titulo}}</h5>
+              <h6 class="card-subtitle"><b>Autor: {{item.usuario.usuarioEmail}}<p></p> Fecha: {{item.fecha}}</h6>
+              <p class="card-text">{{item.descripcion}}</p>
+          </div>
+        </div>
+      </div>
+  </section>
+    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal2" data-whatever="@mdo" (click)="elegirNoticia()"> Modificar</button>
+    <button type="button" class="btn btn-outline-danger" (click)="borrarNoticia(item)">Eliminar</button>
 </div>

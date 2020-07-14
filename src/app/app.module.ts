@@ -13,9 +13,11 @@ import { NovedadesComponent } from './components/novedades/novedades.component';
 import { LocalesComponent } from './components/locales/locales.component';
 import { NoticiasComponent } from './components/noticias/noticias.component';
 import { ContratosComponent } from './components/contratos/contratos.component';
-import {AlifeFileToBase64Module} from 'alife-file-to-base64';
+import { AlifeFileToBase64Module } from 'alife-file-to-base64';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ToastrModule } from 'ngx-toastr'
+import { ToastrModule } from 'ngx-toastr';
+import { PropietariosComponent } from './components/propietarios/propietarios.component'
+import { FacebookModule } from 'ngx-fb';
 
 
 
@@ -29,7 +31,8 @@ import { ToastrModule } from 'ngx-toastr'
     NovedadesComponent,
     LocalesComponent,
     NoticiasComponent,
-    ContratosComponent
+    ContratosComponent,
+    PropietariosComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,9 @@ import { ToastrModule } from 'ngx-toastr'
     HttpClientModule,
     AlifeFileToBase64Module,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    FacebookModule.forRoot()
+
   ],
   providers: [LoginService],
   bootstrap: [AppComponent]

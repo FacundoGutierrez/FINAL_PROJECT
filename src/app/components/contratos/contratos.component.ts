@@ -2,6 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { Contrato } from 'src/app/models/contrato';
 import { ContratoService } from 'src/app/services/contrato.service';
 import { ToastrService } from 'ngx-toastr';
+import { LoginService } from 'src/app/services/login.service';
+import { Usuario } from 'src/app/models/usuario';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { Propietario } from 'src/app/models/propietario';
+
+import { PropietariosService } from 'src/app/services/propietarios.service';
+import {Local} from '../../models/local'
+import { LocalService } from 'src/app/services/local.service';
+import { LocalesComponent } from '../locales/locales.component';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-contratos',
@@ -12,45 +22,84 @@ export class ContratosComponent implements OnInit {
 
   contrato: Contrato;
   contratos: Array<Contrato>;
+  propietarios :Array<Propietario>;
+  propietario: Propietario;
+  local : Local;
+  locales: Array<Local>;
 
-  constructor(private contratoService: ContratoService, private _toastr:ToastrService) { }
+
+
+  constructor(private contratoService: ContratoService, private _toastr:ToastrService, public loginService: LoginService, 
+    private propietarioService: PropietariosService, private localesService:LocalService) {
+
+      this.contrato = new Contrato();
+      this.propietarios = new Array<Propietario>();
+      this.contratos = new Array<Contrato>();
+      this.locales = new Array<Local>();
+      this.propietario = new Propietario();
+      this.local = new Local();
+
+      
+      this.refrescarContrato();
+      this.refrescarPropietarios();
+      this.refrescarLocales();
+     }
 
   ngOnInit(): void {
   }
-  mensajeExito(){
 
-    this._toastr.success("Ha tenido exito", "Exito");
-  }
-  mensajeError(){
   
-    this._toastr.error("Ha tenido error", "Error");
-  }
+  
   
   mensajeInformacion(){
   
     this._toastr.info("Ha tenido información", "Información");
   }
-  
-  mensajeAdvertencia(){
-  
-    this._toastr.warning("Ha tenido advertencia", "Advertencia"); 
-  }
 
 
-
-  guardarcontrato(){
-  
-    this.contratoService.addContrato(this.contrato).subscribe(
+  refrescarPropietarios(){
+    //this.puntosInteres = this.puntoService.getPuntos();
+    
+    this.propietarioService.getPropietarios().subscribe(
       (result)=>{
-        alert("Punto guardado");
+        Object.assign(this.propietarios, result)
       },
       (error)=>{
         console.log(error);
       }
     )
+  }
 
-    this.refrescarContrato();
+  refrescarLocales(){
+    //this.puntosInteres = this.puntoService.getPuntos();
+    this.locales = new Array<Local>();
+    this.localesService.getLocales().subscribe(
+      (result)=>{
+        Object.assign(this.locales, result)
+      },
+      (error)=>{
+        console.log(error);
+      }
+    )
+  }
+
+  
+
+  guardarcontrato(){
+  
+    this.contratoService.addContrato(this.contrato).subscribe(
+      (result)=>{
+        this.refrescarContrato();
     this.contrato = new Contrato();
+    this._toastr.success("Ha tenido exito", "Exito");
+      },
+      (error)=>{
+        this._toastr.error("Ha tenido error", "Error");
+        console.log(error);
+      }
+    )
+
+    
     console.log(this.contrato);
 
   }
@@ -60,7 +109,7 @@ export class ContratosComponent implements OnInit {
     this.contratos = new Array<Contrato>();
     this.contratoService.getContratos().subscribe(
       (result)=>{
-        Object.assign(this.contrato, result)
+        Object.assign(this.contratos, result)
       },
       (error)=>{
         console.log(error);
@@ -72,7 +121,8 @@ export class ContratosComponent implements OnInit {
 
   elegircontrato(contrato: Contrato){
     //punto.sector = this.sectores.find(element=>element._id == punto.sector._id )
-    this.contrato = contrato;
+    
+    Object.assign(this.contrato = contrato);
 
   }
 
@@ -80,12 +130,13 @@ export class ContratosComponent implements OnInit {
     this.contratoService.deleteContrato(contrato).subscribe(
       (result)=>{
         alert("contrato eliminado");
+        this.refrescarContrato();
       }, 
       (error)=>{
         console.log(error);
       }
     );
-    this.refrescarContrato();
+    
   }
 
   limpiarcontrato(){
@@ -100,13 +151,14 @@ export class ContratosComponent implements OnInit {
     this.contratoService.updateContrato(this.contrato).subscribe(
       (result)=>{
         alert("contrato actualizado");
+        this.contrato = new Contrato();
+        this.refrescarContrato()
       },
       (error)=>{
         console.log(error);
       }
     );
-    this.contrato = new Contrato();
-    this.refrescarContrato()
+    
   }
 
 }

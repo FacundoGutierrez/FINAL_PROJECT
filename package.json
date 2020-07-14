@@ -23,6 +23,7 @@
     "bootstrap": "^4.5.0",
     "jquery": "^3.5.1",
     "jspdf": "^1.5.3",
+    "ngx-fb": "^1.0.1",
     "ngx-toastr": "^12.1.0",
     "popper.js": "^1.16.1",
     "print-js": "^1.0.63",

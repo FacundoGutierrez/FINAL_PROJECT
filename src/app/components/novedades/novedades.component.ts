@@ -22,9 +22,7 @@ export class NovedadesComponent implements OnInit {
 
 
   constructor(private novedadService: NovedadService, public loginService: LoginService) { 
-
     this.novedad = new Novedad();
-    
     this.refrescarNovedades();
   }
 
@@ -53,14 +51,8 @@ export class NovedadesComponent implements OnInit {
       (error)=>{
         console.log(error);
       }
-      
-    
     )
-
-   
-    
     console.log(this.novedades);
-
   }
 
   refrescarNovedades(){
@@ -90,7 +82,6 @@ export class NovedadesComponent implements OnInit {
   elegirNovedad(novedad: Novedad){
     //punto.sector = this.sectores.find(element=>element._id == punto.sector._id )
     this.novedad = novedad;
-
   }
 
   borrarNovedad(novedad: Novedad){
@@ -112,8 +103,6 @@ export class NovedadesComponent implements OnInit {
 
   modificarNovedad(){
     //actualizo fecha ultima modificación
-    
-
     this.novedadService.updateNovedad(this.novedad).subscribe(
       (result)=>{
         alert("novedad actualizado");
@@ -125,6 +114,5 @@ export class NovedadesComponent implements OnInit {
     this.novedad = new Novedad();
     this.refrescarNovedades()
   }
-
 }
 

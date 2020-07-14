@@ -1,15 +1,100 @@
-<div class="my bg">
+<div *ngIf="loginService.userLogged.perfil == 'a' || loginService.userLogged.perfil == 'A' ">
+    <div class="row">
+        <form class="col-md-10 offset-1"  action="" #formContrato="ngForm"  id="printJS-form">
+            <h2 class="text-center"> Contratos </h2>
+    
+            <div class="form-group row">
+              <label for="idpropietario" class="col-md-4">Propietario</label>
+              <select id="idpropietario" class="form-control form-control-sm col-md-8" required
+                   name="propietario" #propietario1="ngModel" [(ngModel)] = "contrato.propietario">
+                  <option *ngFor="let user of propietarios" [ngValue]="user">{{user.apellido}}</option>
+              </select>
+            </div>
+            <div *ngIf="propietario1.invalid && (propietario1.dirty || propietario1.touched)" class="alert alert-danger">
+              <div *ngIf="propietario1.errors.required">
+                Propietario es requerido.
+              </div>
+            </div>         
+            
+            <div class="form-group row">
+                <label for="idLocal" class="col-md-4">Local</label>
+                <select id="idLocal" class="form-control form-control-sm col-md-8" required
+                     name="locales" #locales1="ngModel" [(ngModel)] = "contrato.locales">
+                      <option *ngFor="let item of locales" [ngValue]="item">{{item.descripcion}}</option>
+                </select>
+            </div>
+            <div *ngIf="locales1.invalid && (locales1.dirty || locales1.touched)" class="alert alert-danger">
+              <div *ngIf="locales1.errors.required">
+                Local es requerido.
+              </div>
+            </div>
+    
+            <div class="form-group row">
+              <label for="idCostoAlq" class="col-md-4">Costo Alquiler</label>
+              <input id="idCostoAlq" class="form-control form-control-sm col-md-8" required
+                    type="number" name="costoTotalAlq" #costoTotalAlq="ngModel" [(ngModel)]="contrato.costoTotalAlq"/>
+            </div>
+            <div *ngIf="costoTotalAlq.invalid && (costoTotalAlq.dirty || costoTotalAlq.touched)" class="alert alert-danger">
+              <div *ngIf="costoTotalAlq.errors.required">
+                Costo de Alquiler es requerido.
+              </div>
+            </div>         
+    
+            <div class="form-group row">
+                <label for="idFecha" class="col-md-4">Fecha</label>
+                <input id="idFecha" class="form-control form-control-sm col-md-8" required
+                    type="date" name="fecha" #fecha="ngModel" [(ngModel)]="contrato.fecha"/>
+              </div>
+              <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)" class="alert alert-danger">
+                <div *ngIf="fecha.errors.required">
+                  Fecha es requerida.
+                </div>
+              </div> 
+
+            <div class="form-group text-center">
+                <button class="btn btn-secondary ml-2 mr-2" [disabled]="formContrato.invalid"
+                 (click)="guardarcontrato()" ><i class="fas fa-save fal"></i> Guardar</button>
+                <button class="btn btn-secondary ml-2 mr-2" (click)="modificarcontrato()"><i class="fas fa-save fal"></i> Modificar</button>            
+                <button class="btn btn-secondary ml-2 mr-2"  (click)="limpiarcontrato()"><i class="fas fa-brush"></i> Limpiar</button>
+            </div>
+        </form>
+        <table class="table" id="tabla" >
+            <thead>
+              <tr>
+                <th scope="col">Propietario</th>
+                <th scope="col">Local</th>
+                <th scope="col">Costo Alquiler</th>
+                <th scope="col">Fecha</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let variable of contratos">
+               <th scope="row">{{variable.propietario.apellido}}</th>
+                <td scope="row">{{variable.local}}</td> 
+                <td scope="row">{{variable.costoTotalAlq}}</td>
+                <td scope="row">{{variable.fecha | date:'dd/MM/yyyy'}}</td>
+                <td> 
+                  <button class="btn btn-primary" (click)="elegircontrato(variable)">Seleccionar</button>
+                  <button class="btn btn-primary" (click)="borrarcontrato(variable)">Borrar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</div>
+
+<!-- <div class="my bg">
     <div class="container">
         <div class="row pt-5">
             <div class="col-md-6 offset-md-3">
                 <div class="text-center">
                     <button class="btn"></button>
-                    <button class="btn btn-outline-success mx-3" (click)="mensajeExito()" >Éxito</button>
-                    <button class="btn btn-outline-danger mx-3" (click)="mensajeError()" >Error</button>
-                    <button class="btn btn-outline-info mx-3"  (click)="mensajeInformacion()" >Información</button>
-                    <button class="btn btn-outline-warning mx-3"  (click)="mensajeAdvertencia()" >Advertencia</button>
+                    <button class="btn btn-outline-success mx-3" (click)="mensajeExito()">Éxito</button>
+                    <button class="btn btn-outline-danger mx-3"(click)="mensajeError()">Error</button>
+                    <button class="btn btn-outline-info mx-3" (click)="mensajeInformacion()">Información</button>
+                    <button class="btn btn-outline-warning mx-3" (click)="mensajeAdvertencia()">Advertencia</button>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div> -->

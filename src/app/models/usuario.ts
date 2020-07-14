@@ -10,8 +10,6 @@ perfil: string
     this.password = password;
     this.activo = activo;
     this.usuario = usuario;
-    this.perfil = perfil;
-
-
+    this.perfil = "perfil";
  }
 }

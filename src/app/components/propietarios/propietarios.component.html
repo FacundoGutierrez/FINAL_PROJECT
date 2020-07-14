@@ -1,0 +1,116 @@
+<div *ngIf="loginService.userLogged.perfil == 'a' || loginService.userLogged.perfil == 'A'">
+    <div class="row">
+        <form class="col-md-10 offset-1"  action="" #formPropietario="ngForm" >
+            <h2 class="text-center"> Crear Propietario </h2>
+            <div class="form-group row">
+                <label for="idpropietario" class="col-md-4">Apellido</label>
+                <input id="idpropietario" class="form-control form-control-sm col-md-8" required minlength="2"
+                    type="text" name="propietario" #propietario1="ngModel"
+                    [(ngModel)]="propietario.apellido"/>
+            </div>
+            <div *ngIf="propietario1.invalid && (propietario1.dirty || propietario1.touched)" class="alert alert-danger">
+              <div *ngIf="propietario1.errors.required">
+                Apellido es requerido.
+              </div>
+              <div *ngIf="propietario1.errors.minlength">
+                Apellido debe tener al menos 2 caracteres.
+              </div>
+            </div> 
+    
+            <div class="form-group row">
+                <label for="idnombres" class="col-md-4">Nombres</label>
+                <input id="idnombres" class="form-control form-control-sm col-md-8" required minlength="4"
+                     type="text" name="nombres" #nombres="ngModel"
+                      [(ngModel)] = "propietario.nombres"/>
+            </div>
+            <div *ngIf="nombres.invalid && (nombres.dirty || nombres.touched)" class="alert alert-danger">
+              <div *ngIf="nombres.errors.required">
+                Nombres es requerido.
+              </div>
+              <div *ngIf="nombres.errors.minlength">
+                Nombres debe tener al menos 4 caracteres.
+              </div>
+            </div>
+    
+            <div class="form-group row">
+                <label for="idDni" class="col-md-4">DNI</label>
+                <input id="idDni" class="form-control form-control-sm col-md-8" required minlength="7"
+                     type="number" name="dni" #dni="ngModel"
+                      [(ngModel)] = "propietario.dni"/>
+            </div>
+            <div *ngIf="dni.invalid && (dni.dirty || dni.touched)" class="alert alert-danger">
+              <div *ngIf="dni.errors.required">
+                DNI es requerido.
+              </div>
+              <div *ngIf="dni.errors.minlength">
+                DNI debe tener al menos 7 caracteres.
+              </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="idEmail" class="col-md-4">E-mail</label>
+                <input id="idEmail" class="form-control form-control-sm col-md-8" required minlength="7"
+                     type="text" name="email" #email="ngModel"
+                      [(ngModel)] = "propietario.email"/>
+            </div>
+      
+            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+              <div *ngIf="email.errors.required">
+                email es requerido.
+              </div>
+              <div *ngIf="email.errors.minlength">
+                email debe tener al menos 7 caracteres.
+              </div>
+            </div>
+
+            
+            <div class="form-group row">
+                <label for="idTelefono" class="col-md-4">Teléfono</label>
+                <input id="idTelefono" class="form-control form-control-sm col-md-8" required minlength="7"
+                     type="number" name="telefono" #telefono="ngModel"
+                      [(ngModel)] = "propietario.telefono"/>
+            </div>
+            <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="alert alert-danger">
+              <div *ngIf="telefono.errors.required">
+                Telefono es requerido.
+              </div>
+              <div *ngIf="telefono.errors.minlength">
+                Telefono debe tener al menos 7 caracteres.
+              </div>
+            </div>
+            
+    
+            <div class="form-group text-center">
+                <button class="btn btn-secondary ml-2 mr-2" [disabled]="formPropietario.invalid"
+                 (click)="guardarPropietario()" ><i class="fas fa-save fal"></i> Guardar</button>
+                <button class="btn btn-secondary ml-2 mr-2" (click)="modificarPropietario()"><i class="fas fa-save fal"></i> Modificar</button>            
+                <button class="btn btn-secondary ml-2 mr-2"  (click)="limpiarPropietario()"><i class="fas fa-brush"></i> Limpiar</button>
+            </div>
+        </form>
+    
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Apellido</th>
+                <th scope="col">Nombres</th>
+                <th scope="col">DNI</th>
+                <th scope="col">Email</th>
+                <th scope="col">Teléfono</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let variable of propietarios">
+                <th scope="row">{{variable.apellido}}</th>
+                <td>{{variable.nombres}}</td>
+                <td>{{variable.dni}}</td>
+                <td>{{variable.email}}</td>
+                <td>{{variable.telefono}}</td>
+                <td> 
+                  <button class="btn btn-primary" (click)="elegirPropietario(variable)">Seleccionar</button>
+                  <button class="btn btn-primary" (click)="borrarPropietario(variable)">Borrar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+    </div>

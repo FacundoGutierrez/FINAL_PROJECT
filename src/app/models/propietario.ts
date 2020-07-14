@@ -4,7 +4,7 @@ export class Propietario {
     nombres: string
     dni: number
     email: string
-    teléfono: number
+    telefono: number
 
     constructor(_id?:number, apellido?:string, nombres?:string, dni?:number, email?:string,telefono?:number){
 
@@ -14,7 +14,7 @@ export class Propietario {
         this.nombres= nombres;
         this.dni = dni;
         this.email = email;
-        this.teléfono = telefono;
+        this.telefono = telefono;
 
 
     }
