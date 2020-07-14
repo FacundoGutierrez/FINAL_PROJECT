@@ -3,6 +3,8 @@ import { Novedad } from '../../models/novedad';
 import { NovedadService } from 'src/app/services/novedad.service';
 import { Usuario } from 'src/app/models/usuario';
 import { LoginService } from 'src/app/services/login.service';
+import { ToastrService } from 'ngx-toastr';
+import { ThrowStmt } from '@angular/compiler';
 
 
 @Component({
@@ -21,7 +23,7 @@ export class NovedadesComponent implements OnInit {
   tamText :number;
 
 
-  constructor(private novedadService: NovedadService, public loginService: LoginService) { 
+  constructor(private novedadService: NovedadService, public loginService: LoginService, private _toastr: ToastrService) { 
     this.novedad = new Novedad();
     this.refrescarNovedades();
   }
@@ -44,12 +46,13 @@ export class NovedadesComponent implements OnInit {
     this.novedad.estado = "pendiente";
     this.novedadService.addNovedad(this.novedad).subscribe(
       (result)=>{
-        alert("Novedad guardado");
+        this._toastr.success("Ha tenido éxito", "Éxito");
         this.refrescarNovedades();
         this.novedad = new Novedad();
       },
       (error)=>{
         console.log(error);
+        this._toastr.error("Ha tenido error", "Error");
       }
     )
     console.log(this.novedades);
@@ -87,10 +90,11 @@ export class NovedadesComponent implements OnInit {
   borrarNovedad(novedad: Novedad){
     this.novedadService.deleteNovedad(novedad).subscribe(
       (result)=>{
-        alert("novedad eliminado");
+        this._toastr.success("Ha borrado éxito", "Éxito");
       }, 
       (error)=>{
         console.log(error);
+        this._toastr.error("Ha tenido error", "Error");
       }
     );
     this.refrescarNovedades();
@@ -101,18 +105,22 @@ export class NovedadesComponent implements OnInit {
   }
 
 
-  modificarNovedad(){
+  modificarNovedad(b:Novedad){
     //actualizo fecha ultima modificación
+    this.novedad = b;
+    this.novedad.estado = 'procesado';
     this.novedadService.updateNovedad(this.novedad).subscribe(
       (result)=>{
-        alert("novedad actualizado");
+        this._toastr.success("Ha modificado éxito", "Éxito");
+        this.novedad = new Novedad();
+        this.refrescarNovedades()
       },
       (error)=>{
         console.log(error);
+        this._toastr.error("Ha tenido error", "Error");
       }
     );
-    this.novedad = new Novedad();
-    this.refrescarNovedades()
+ 
   }
 }
 

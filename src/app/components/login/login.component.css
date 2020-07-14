@@ -1,0 +1,25 @@
+.FormBox{
+    width: 300px;
+    height: 600px;
+    background: rgba(48, 46, 59, 0.856);
+    color: #fff;
+    border: 5px solid #fff;
+    top: 50%;
+    left: 50%;
+    box-sizing: border-box;
+    padding: 70px 30px;
+    border-radius: 10%;
+}
+.BodyForm{
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.Titulo{
+    margin: 0;
+    padding: 45px;
+    text-align: center;
+    font-size: 22px;
+}

@@ -19,7 +19,7 @@ export class LocalesComponent implements OnInit {
   
   local:Local;
   locales:Array<Local>;
-  tamMaxText : number = 20;
+  tamMaxText : number = 100;
   tamText :number;
 
   constructor(private localService: LocalService, public loginServices: LoginService, private _toastr: ToastrService) { 
@@ -33,20 +33,7 @@ export class LocalesComponent implements OnInit {
   }
 
   
-  mensajeError(){
-  
-    this._toastr.error("Ha tenido error", "Error");
-  }
-  
-  mensajeInformacion(){
-  
-    this._toastr.info("Ha tenido información", "Información");
-  }
-  
-  mensajeAdvertencia(){
-  
-    this._toastr.warning("Ha tenido advertencia", "Advertencia"); 
-  }
+ 
 
 
   cambiarTamTexto(){
@@ -65,7 +52,7 @@ export class LocalesComponent implements OnInit {
    public Print(){
 
     JSON.stringify(this.locales); 
-    printJS({ printable: this.locales, properties:['superficie', 'alquilado','costoMes'],type: 'json' })
+    printJS({ printable: this.locales, properties:['superficie', 'alquilado','descripcion','costoMes'],type: 'json' })
 
   }
 
@@ -91,13 +78,14 @@ export class LocalesComponent implements OnInit {
     }
     this.localService.addLocales(this.local).subscribe(
       (result)=>{
-        alert("Local guardado");
+        
         this.refrescarLocales();
         this.local = new Local();
         this._toastr.success("Ha tenido exito", "Exito");
       },
       (error)=>{
         console.log(error);
+        this._toastr.error("Ha tenido error", "Error");
       }
     )
 
@@ -123,7 +111,6 @@ export class LocalesComponent implements OnInit {
 
   elegirlocal(local: Local){
     //punto.sector = this.sectores.find(element=>element._id == punto.sector._id )
-    
     Object.assign(this.local, local);
 
   }
@@ -131,10 +118,11 @@ export class LocalesComponent implements OnInit {
   borrarlocal(local: Local){
     this.localService.deleteLocales(local).subscribe(
       (result)=>{
-        alert("local eliminado");
+        this._toastr.success("Ha sido borrado con exito", "Exito");
       }, 
       (error)=>{
         console.log(error);
+        this._toastr.error("Ha tenido error", "Error");
       }
     );
     this.refrescarLocales();
@@ -149,12 +137,13 @@ export class LocalesComponent implements OnInit {
     //actualizo fecha ultima modificación
     this.localService.updateLocal(this.local).subscribe(
       (result)=>{
-        alert("local actualizado");
+        this._toastr.success("Ha tenido exito", "Exito");
         this.local = new Local();
         this.refrescarLocales()
       },
       (error)=>{
         console.log(error);
+        this._toastr.error("Ha tenido error", "Error");
       }
     );
 

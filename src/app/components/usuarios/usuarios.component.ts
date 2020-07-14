@@ -4,6 +4,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { LoginService } from 'src/app/services/login.service';
 import { PropietariosService } from 'src/app/services/propietarios.service';
 import { Propietario } from 'src/app/models/propietario';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -25,7 +26,7 @@ export class UsuariosComponent implements OnInit {
 
 
 
-  constructor(private usuarioService: UsuarioService, public loginService:LoginService, private propietarioService:PropietariosService) { 
+  constructor(private usuarioService: UsuarioService, public loginService:LoginService, private propietarioService:PropietariosService, private _toastr: ToastrService) { 
    this.usuario = new Usuario();
    this.usuarios= new Array<Usuario>();
     this.usuario1= new Usuario();
@@ -74,7 +75,7 @@ export class UsuariosComponent implements OnInit {
     }
     this.usuarioService.addUsuarios(this.usuario).subscribe(
       (result)=>{
-        alert("Punto guardado");
+        this._toastr.success("Ha tenido éxito", "Éxito");
       },
       (error)=>{
         console.log(error);
@@ -111,7 +112,7 @@ export class UsuariosComponent implements OnInit {
   borrarUsuario(usuario: Usuario){
     this.usuarioService.deleteUsuarios(usuario).subscribe(
       (result)=>{
-        alert("usuario eliminado");
+        this._toastr.success("Ha borrado con éxito", "Éxito");
       }, 
       (error)=>{
         console.log(error);
@@ -131,7 +132,7 @@ export class UsuariosComponent implements OnInit {
 
     this.usuarioService.updateUsuario(this.usuario).subscribe(
       (result)=>{
-        alert("usuario actualizado");
+        this._toastr.success("Ha actualizado con éxito", "Éxito");
       },
       (error)=>{
         console.log(error);

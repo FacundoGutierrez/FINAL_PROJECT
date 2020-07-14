@@ -1,10 +1,11 @@
 <div *ngIf="loginService.userLogged.perfil == 'a' || loginService.userLogged.perfil == 'A'">
-<div class="row">
-    <form class="col-md-10 offset-1"  action="" #formUsuario="ngForm" >
-        <h2 class="text-center"> Crear Usuario </h2>
+<div class="contenedor">
+    <form class="card text-white bg-dark mb-3"  action="" #formUsuario="ngForm" >
+      <div class="card-header alert-link alert-primary text-center h2">Usuarios</div>
+      <div class="card-body">
         <div class="form-group row">
-            <label for="idusuario" class="col-md-4">Usuario</label>
-            <input id="idusuario" class="form-control form-control-sm col-md-8" required minlength="6"
+            <label for="idusuario" class="col-sm-12 col-md-2">Usuario</label>
+            <input id="idusuario" class="form-control col-sm-12 col-md-8" required minlength="6"
                 type="text" name="usuario" #usuario1="ngModel"
                 [(ngModel)]="usuario.usuario"/>
         </div>
@@ -18,8 +19,8 @@
         </div>   
 
         <div class="form-group row">
-            <label for="idpassword" class="col-md-4">Password</label>
-            <input id="idpassword" class="form-control form-control-sm col-md-8" required minlength="4"
+            <label for="idpassword" class="col-sm-12 col-md-2">Password</label>
+            <input id="idpassword" class="form-control col-sm-12 col-md-8" required minlength="4"
                  type="password" name="password" #password="ngModel"
                   [(ngModel)] = "usuario.password"/>
         </div>
@@ -33,16 +34,16 @@
         </div>
 
         <div class="form-group row">
-            <label for="idActivo" class="col-md-4">Activo</label>
-            <input id="idActivo" class="form-check-input" 
+            <label for="idActivo" class="col-sm-12 col-md-2">Activo</label>
+            <input id="idActivo" class="form-check-input form-control offset-1" 
               type="checkbox" name="activo" #activo="ngModel" 
                   [(ngModel)] = "usuario.activo"/>
         </div>
 
 
         <div class="form-group row">
-          <label for="idsector" class="col-md-4">Perfil</label>
-          <select id="idsector" class="form-control form-control-sm col-md-8" required
+          <label for="idsector" class="col-sm-12 col-md-2">Perfil</label>
+          <select id="idsector" class="form-control col-sm-12 col-md-8" required
                name="perfil" #perfil="ngModel"
               [(ngModel)] = "usuario.perfil">
                 <option value="P">Inquilino (propietario)</option>
@@ -62,9 +63,10 @@
             <button class="btn btn-secondary ml-2 mr-2" (click)="modificarUsuario()"><i class="fas fa-save fal"></i> Modificar</button>            
             <button class="btn btn-secondary ml-2 mr-2"  (click)="limpiarUsuario()"><i class="fas fa-brush"></i> Limpiar</button>
         </div>
-    
-
-    <table class="table">
+      </div>
+    </form>   
+    <div class="row"><h3 class="alert alert-primary col-12 text-center">Listado de usuarios</h3></div>
+    <table class="table table-dark">
         <thead>
           <tr>
             <th scope="col">Usuario</th>
@@ -87,3 +89,4 @@
           </tr>
         </tbody>
       </table>
+</div>

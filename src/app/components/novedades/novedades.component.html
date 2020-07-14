@@ -3,7 +3,7 @@
     <div *ngIf="loginService.userLogged.perfil == 'P' || 'A'">
     <br><form class="card text-white bg-dark mb-3" #novedadForm="ngForm">
         <div class="card-header alert-link alert-primary text-center h2">Novedades</div>
-        <div class="card-body">
+        <div class="card-body offset-2">
             <label>Tu Mensaje: </label>
             <div class="row form-group">
                 <textarea class="form-control col-sm-12 col-md-10" [maxlength]="tamMaxText" rows="5" name="texto" [(ngModel)]="novedad.texto" (ngModelChange)="cambiarTamTexto()" placeholder="Escriba el Mensaje..." #texto="ngModel" required></textarea>
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="row form-group">
-              <div class="col-2"></div>
+              <div class="col-1"></div>
               <button type="button" class="btn btn-primary col-3 alert-link" [disabled]="novedadForm.invalid" (click)= "guardarNovedad()">Enviar</button>
               <div class="col-2"></div>
               <button type="reset" class="btn btn-primary col-3 alert-link" (click)="limpiarNovedad()">Limpiar</button>
@@ -32,6 +32,7 @@
             <th scope="col">De</th>
             <th scope="col">Texto</th>
             <th scope="col">Estado</th>
+            <th scope="col">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -39,6 +40,7 @@
             <td>{{item.usuarios.usuario}}</td>
             <td>{{item.texto}}</td>
             <td>{{item.estado}}</td>
+            <td> <button class="btn btn-primary alert-link" *ngIf="item.estado == 'pendiente'" (click)="modificarNovedad(item)">Leido</button></td>
           </tr>
         </tbody>
     </table>

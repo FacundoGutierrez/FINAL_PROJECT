@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PropietariosService } from 'src/app/services/propietarios.service';
 import { Propietario } from 'src/app/models/propietario';
 import { LoginService } from 'src/app/services/login.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-propietarios',
@@ -14,7 +15,7 @@ export class PropietariosComponent implements OnInit {
   propietarios: Array<Propietario>;
   
 
-  constructor(private propietarioService:PropietariosService, public loginService: LoginService) {
+  constructor(private propietarioService:PropietariosService, public loginService: LoginService, private _toastr: ToastrService) {
 
     this.propietarios = new Array<Propietario>();
     this.propietario = new Propietario();
@@ -35,12 +36,13 @@ export class PropietariosComponent implements OnInit {
     
     this.propietarioService.addPropietario(this.propietario).subscribe(
       (result)=>{
-        alert("Punto guardado");
+        this._toastr.success("Ha tenido éxito", "Éxito");
         this.refrescarPropietarios();
         this.propietario = new Propietario();
       },
       (error)=>{
         console.log(error);
+        this._toastr.error("Ha tenido error", "Error");
       }
     )
 
@@ -58,6 +60,7 @@ export class PropietariosComponent implements OnInit {
       },
       (error)=>{
         console.log(error);
+
       }
     )
   }
@@ -73,10 +76,11 @@ export class PropietariosComponent implements OnInit {
   borrarPropietario(propietario: Propietario){
     this.propietarioService.deletePropietario(propietario).subscribe(
       (result)=>{
-        alert("propietario eliminado");
+        this._toastr.success("Ha borrado éxito", "Éxito");
       }, 
       (error)=>{
         console.log(error);
+        this._toastr.error("Ha tenido error", "Error");
       }
     );
     this.refrescarPropietarios();
@@ -93,10 +97,11 @@ export class PropietariosComponent implements OnInit {
 
     this.propietarioService.updatePropietario(this.propietario).subscribe(
       (result)=>{
-        alert("propietario actualizado");
+        this._toastr.success("Ha actualizado con éxito", "Éxito");
       },
       (error)=>{
         console.log(error);
+        this._toastr.error("Ha tenido error", "Error");
       }
     );
     this.propietario = new Propietario();

@@ -5,6 +5,7 @@ import { LoginService } from 'src/app/services/login.service';
 import { FacebookService, InitParams, LoginResponse } from 'ngx-fb';
 import { ApiMethod } from 'ngx-fb/dist/esm/providers/facebook';
 import { Usuario } from 'src/app/models/usuario';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-noticias',
@@ -20,12 +21,13 @@ export class NoticiasComponent implements OnInit {
   mostrarNoticias: boolean = false;
   
   
-  constructor(private noticiasService:NoticiaService, public loginService:LoginService, private fb: FacebookService) {
+  constructor(private noticiasService:NoticiaService, public loginService:LoginService, private fb: FacebookService, private _toastr: ToastrService) {
      this.noticias = new Array<Noticia>();
      this.noticia = new Noticia();
      this.usuario = new Usuario();
      this.usuarios = new Array<Usuario>();
      this.cargarNoticias();
+     this.iniciarFb();
    }
 
   ngOnInit(): void {
@@ -36,14 +38,11 @@ export class NoticiasComponent implements OnInit {
     this.noticiasService.getNoticias().subscribe(
       (result)=>{
         var not: Noticia = new Noticia();
-        result.forEach(element => {
-          Object.assign(not, element);
-          if(not.vigente == true){
-            this.noticias.push(not);
-          }
+       Object.assign(this.noticias, result)
+       console.log(this.noticias)
           not = new Noticia();
-        });
       },
+
       (error) => {
         console.log(error);
       }
@@ -51,14 +50,21 @@ export class NoticiasComponent implements OnInit {
   }
 
   guardarNoticia(){
+    
+    this.noticia.fecha = new Date();
+    this.noticia.usuario = this.loginService.userLogged;
+    this.noticia.vigente = true;
+    this.postFb();
     this.noticiasService.addNoticias(this.noticia).subscribe(
       (result)=>{
-        alert("Noticia guardado");
+        this._toastr.success("Ha tenido éxito", "Éxito");
         this.refrescarNoticias();
         this.noticia = new Noticia();
+       
       },
       (error)=>{
         console.log(error);
+        this._toastr.error("Ha tenido error", "Error");
       }
     )
 
@@ -84,17 +90,18 @@ export class NoticiasComponent implements OnInit {
 
   elegirNoticia(noticia: Noticia){
     //punto.sector = this.sectores.find(element=>element._id == punto.sector._id )
-    this.noticia = noticia;
+    Object.assign(this.noticia, noticia);
 
   }
 
   borrarNoticia(noticia: Noticia){
     this.noticiasService.deleteNoticias(noticia).subscribe(
       (result)=>{
-        alert("Noticia eliminado");
+        this._toastr.success("Ha tenido exito", "Exito");
       }, 
       (error)=>{
         console.log(error);
+        this._toastr.error("Ha tenido error", "Error");
       }
     );
     this.refrescarNoticias();
@@ -111,14 +118,16 @@ export class NoticiasComponent implements OnInit {
 
     this.noticiasService.updateNoticia(this.noticia).subscribe(
       (result)=>{
-        alert("Noticia actualizado");
+        this._toastr.success("Ha sido modificado con éxito", "Éxito");
+        this.noticia = new Noticia();
+    this.refrescarNoticias()
       },
       (error)=>{
         console.log(error);
+        this._toastr.error("Ha tenido error", "Error");
       }
     );
-    this.noticia = new Noticia();
-    this.refrescarNoticias()
+  
   }
   
 
@@ -136,8 +145,8 @@ export class NoticiasComponent implements OnInit {
       var apiMethod: ApiMethod = "post";
       this.fb.api('/115493920230270/feed', apiMethod,
       {
-      message: 'mensaje:'+this.noticia.descripcion,
-      access_token:"EAARoZBg2av9YBAONRyRNSMekms9S7P8tVF9vwbXUf25O3rxsoJTD9QZC24Dst99el8OjW4BWIxReDIhxyNZB4E8vRTA80SWVj5xxLSC8VZApZCt9tLxE0ZCLClZAw7mZAAx29d6SEHkzSoCeLreMynqb1VHzfJigpffPMxQHCsrL5o4jhEfygZAreZC4vlxB29UDZAJQbE8McAZA8QZDZD"
+      message: 'FECHA:'+this.noticia.fecha + '\nTITULO:'+ this.noticia.titulo + '\nDESCRIPCION:' + this.noticia.descripcion,
+      access_token:"EAARoZBg2av9YBAK4C9fpN9NHgZAMwc5P0ZAPZBNHUCNZAMTzieS6Xy0paHHF9O5w6nZBE9P9EqVXltrthWE46AduC7ynLK2DSFI0GZACkP3A75SXTwrZA3xvIsbVM88mMcqvZC7XPQhbl72iQ7fwM8eq8gMmxVRRI9HQlz7RmfXSR5nL3wEkI4uSn3SZBVtHgKZAuGovNBEvi0ZAdwZDZD"
       });
   }
 

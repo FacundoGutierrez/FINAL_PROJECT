@@ -1,9 +1,10 @@
-  <div>
-    <form class="card" #formNoticia="ngForm">
-      <h2 class="alert alert-dark col-12">AGREGAR NOTICIA</h2>
+<div *ngIf="loginService.userLogged.perfil == 'a' || loginService.userLogged.perfil == 'A'">
+<div class="contenedor">
+    <form class="card text-white bg-dark mb-3" #formNoticia="ngForm">
+      <div class="card-header alert-link alert-primary text-center h2">Agregar Noticia</div>
       <div class="card-body">
         <div class="row form-group">
-          <label class="col-sm-12 col-md-4" for="Titulo">Titulo:</label>
+          <label class="col-sm-12 col-md-2" for="Titulo">Titulo:</label>
           <input class="form-control col-sm-12 col-md-8" type="text" id="titulo" name="titulo" required minlength="6" [(ngModel)] = "noticia.titulo" #titulo="ngModel"/>
           <div *ngIf="titulo.invalid && (titulo.dirty || titulo.touched)" class="alert alert-danger">
             <div *ngIf="titulo.errors.required">
@@ -16,9 +17,9 @@
         </div>
        
         <div class="row form-group">
-            <label class="col-sm-12 col-md-4" for="descripcion">Descripcion:</label>
-          <textarea class="form-control" id="descripcion" rows="5" name="descripcion" required minlength="50" [(ngModel)]="noticia.descripcion" #descripcion="ngModel"></textarea>
-          <div *ngIf="descripcion.invalid && (para.dirty || descripcion.touched)" class="alert alert-danger">
+            <label class="col-sm-12 col-md-2" for="descripcion">Descripcion:</label>
+          <textarea class="form-control col-sm-12 col-md-8" id="descripcion" rows="5" name="descripcion" required minlength="50" [(ngModel)]="noticia.descripcion" #descripcion="ngModel"></textarea>
+          <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)" class="alert alert-danger">
             <div *ngIf="descripcion.errors.required">
               Debe escribir una Descripcion.
             </div>
@@ -34,8 +35,17 @@
       </div>   
     </form>
   </div>
+</div>
 
-
+<section id="slide">
+  <div class="slider">
+      <ul>
+          <li><img src="assets/1.png" alt="Sliderr" height="420" width="1000"></li>
+          <li><img src="assets/2.png" alt="Sliderr" height="420" width="1000"></li>
+          <li><img src="assets/3.png" alt="Sliderr" height="420" width="1000"></li>
+      </ul>
+  </div>
+</section>
 
 <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
   <div class="modal-dialog">
@@ -54,7 +64,7 @@
           </div>
           <div class="form-group">
             <label for="text-mensaje" class="col-form-label">Descripcion</label>
-            <input type="number" name="text-monto" class="form-control" id="text-mensaje"[(ngModel)]="noticia.descripcion">
+            <input type="text" name="text-monto" class="form-control" id="text-mensaje"[(ngModel)]="noticia.descripcion">
           </div>
 
             <div class="form-group">
@@ -72,18 +82,19 @@
 </div>
 
 <div class="container">
-  <section id="section1" *ngIf="mostrarNoticias">
+  <section id="section1" >
       <div id="titulo1" style="text-align: center;">Noticias</div>
       <div class="row form-group col-12">
         <div class="card col-md-6" *ngFor="let item of noticias">
-          <div class="card-body">
+          <div class="card-body ">
               <h5 class="card-title">{{item.titulo}}</h5>
-              <h6 class="card-subtitle"><b>Autor: {{item.usuario.usuarioEmail}}<p></p> Fecha: {{item.fecha}}</h6>
+              <h6 class="card-subtitle"><br>Autor: {{item.usuario.usuario}}</h6>
+              <h6 class="card-subtitle"><br>Fecha: {{item.fecha | date:'dd-MM-yyyy'}}</h6>
               <p class="card-text">{{item.descripcion}}</p>
           </div>
+          <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal2" data-whatever="@mdo" (click)="elegirNoticia(item)">Modificar</button>
+          <button type="button" class="btn btn-outline-danger" (click)="borrarNoticia(item)">Eliminar</button>
         </div>
       </div>
-  </section>
-    <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal2" data-whatever="@mdo" (click)="elegirNoticia()"> Modificar</button>
-    <button type="button" class="btn btn-outline-danger" (click)="borrarNoticia(item)">Eliminar</button>
+  </section>   
 </div>

@@ -2,7 +2,7 @@ import { Usuario } from './usuario'
 
 export class Novedad {
 
-    _id: number
+    _id: string
     usuarios: Usuario
     texto: string
     estado: string 

@@ -12,8 +12,8 @@ export class Contrato {
         constructor(_id?:number,fecha?:Date,propietario?:Propietario, locales?:Array<Local>,costoTotalAlq?:number){
             this._id = _id;
             this.fecha = fecha;
-            this.propietario = propietario;
+            this.propietario = new Propietario();
             this.locales = locales;
-            this.costoTotalAlq = costoTotalAlq;
+            this.costoTotalAlq = 0;
         }
 }

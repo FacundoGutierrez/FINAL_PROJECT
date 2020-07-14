@@ -1,37 +1,32 @@
 <div *ngIf="loginServices.userLogged.perfil == 'a' || 'A'">
-    <div class="row">
-        <form class="col-md-10 offset-1 "  action="" #formLocal="ngForm"  id="printJS-form">
-            <h2 class="text-center">Locales</h2>
-            
-            <div class="form-group row">
-                <label for="idSuperficie" class="col-md-4">Superficie</label>
-                <input id="idSuperficie" class="form-control form-control-sm col-md-8" required
+    <div class="contenedor">
+        <form class="card text-white bg-dark mb-3"  action="" #formLocal="ngForm"  id="printJS-form">
+          <div class="card-header alert-link alert-primary text-center h2">Locales</div>
+          <div class="card-body">
+          <div class="row form-group">
+                <label for="idSuperficie" class="col-sm-12 col-md-2">Superficie</label>
+                <input id="idSuperficie" class="form-control col-sm-12 col-md-8" required
                     type="number" name="superficie" #superficie="ngModel"
                     [(ngModel)]="local.superficie"/>
-            </div>
-            <div *ngIf="superficie.invalid && (superficie.dirty || superficie.touched)" class="alert alert-danger">
-              <div *ngIf="superficie.errors.required">
-                Superficie es requerido.
-              </div>
-            </div> 
-    
-            <div class="form-group row">
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="customFileLang" lang="es" alife-file-to-base64
-                      (onFileChanged)="cambioImg($event,'localnuevo')" name="imagen1" >
-                    <label class="custom-file-label" for="customFileLang">Seleccionar una Imagen</label>
-                  </div>
-                  <div><br>
-                    <img src="{{local.imagen}}" class="card-img" alt="..." height="500px" >
-                    <br></div>
-                  <br>
-           
           </div>
-            <div class="card-body">
-              <label>Descripcion: </label>
-              <div class="row form-group">
-                  <textarea class="form-control col-sm-12 col-md-10" [maxlength]="tamMaxText" rows="5" name="descripcion" [(ngModel)]="local.descripcion" (ngModelChange)="cambiarTamTexto()" placeholder="Escriba el Mensaje..." #descripcion="ngModel" required></textarea>
-              </div>
+          <div *ngIf="superficie.invalid && (superficie.dirty || superficie.touched)" class="alert alert-danger">
+            <div *ngIf="superficie.errors.required">
+              Superficie es requerido.
+            </div>
+          </div> 
+    
+          <div class="row form-group">
+            <label for="imgn" class="col-sm-12 col-md-2">Imagen</label>
+            <input type="file" class="form-control col-sm-12 col-md-8" id="customFileLang" lang="es" alife-file-to-base64
+              (onFileChanged)="cambioImg($event,'localnuevo')" name="imagen1" >
+            <div><br>
+              <img src="{{local.imagen}}" class="card-img" alt="..." height="500px" >
+            <br></div><br>
+          </div>
+            <div class="row form-group">
+              <label class="col-sm-12 col-md-2">Descripcion: </label>
+                  <textarea class="form-control col-sm-12 col-md-8" [maxlength]="tamMaxText" rows="5" name="descripcion" [(ngModel)]="local.descripcion" (ngModelChange)="cambiarTamTexto()" placeholder="Escriba el Mensaje..." #descripcion="ngModel" required></textarea>
+              
               <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)"
                   class="alert alert-danger">
                   <div *ngIf="descripcion.errors.required">
@@ -39,17 +34,16 @@
                   </div>
               </div>
             </div>
-    
-            <div class="form-group row">
-                <label for="idAlquilado" class="col-md-4">Alquilado</label>
-                <input id="idAlquilado" class="form-check-input" 
+            <div class="row form-group">
+                <label for="idAlquilado" class="col-sm-12 col-md-2">Alquilado</label>
+                <input id="idAlquilado" class="form-check-input form-control offset-1" 
                   type="checkbox" name="alquilado" #alquilado="ngModel" 
                       [(ngModel)] = "local.alquilado"/>
             </div>
     
-            <div class="form-group row">
-              <label for="idCostoMes" class="col-md-4">Costo por Mes</label>
-              <input id="idCostoMes" class="form-control form-control-sm col-md-8" required
+            <div class="row form-group">
+              <label for="idCostoMes" class="col-sm-12 col-md-2">Costo por Mes</label>
+              <input id="idCostoMes" class="form-control col-sm-12 col-md-8" required
                     type="number" name="costoMes" #costoMes="ngModel"
                     [(ngModel)]="local.costoMes"/>
             </div>
@@ -65,10 +59,11 @@
                 <button class="btn btn-secondary ml-2 mr-2" (click)="modificarlocal()"><i class="fas fa-save fal"></i> Modificar</button>            
                 <button class="btn btn-secondary ml-2 mr-2"  (click)="limpiarlocal()"><i class="fas fa-brush"></i> Limpiar</button>
             </div>
+          </div>
         </form>
 
-        
-        <table class="table" id="tabla" >
+        <div class="row"><h3 class="alert alert-primary col-12 text-center">Listado de Locales</h3></div>
+        <table class="table table-dark" id="tabla" >
             <thead>
               <tr>
                 <th scope="col">Superficie</th>
@@ -86,7 +81,7 @@
                 <td> 
                   <button class="btn btn-primary" (click)="elegirlocal(variable)">Seleccionar</button>
                   <button class="btn btn-primary" (click)="borrarlocal(variable)">Borrar</button>
-                  <button type="button" (click)="Print()">imprimir pdf</button>
+                  <button class="btn btn-primary" (click)="Print()">Imprimir pdf</button>
                 </td>
               </tr>
             </tbody>

@@ -1,11 +1,11 @@
 <div *ngIf="loginService.userLogged.perfil == 'a' || loginService.userLogged.perfil == 'A' ">
-    <div class="row">
-        <form class="col-md-10 offset-1"  action="" #formContrato="ngForm"  id="printJS-form">
-            <h2 class="text-center"> Contratos </h2>
-    
+    <div class="contenedor">
+        <form class="card text-white bg-dark mb-3"  action="" #formContrato="ngForm"  id="printJS-form">
+          <div class="card-header alert-link alert-primary text-center h2">Contratos</div>
+          <div class="card-body">
             <div class="form-group row">
-              <label for="idpropietario" class="col-md-4">Propietario</label>
-              <select id="idpropietario" class="form-control form-control-sm col-md-8" required
+              <label for="idpropietario" class="col-sm-12 col-md-2">Propietario</label>
+              <select id="idpropietario" class="form-control col-sm-12 col-md-8" required
                    name="propietario" #propietario1="ngModel" [(ngModel)] = "contrato.propietario">
                   <option *ngFor="let user of propietarios" [ngValue]="user">{{user.apellido}}</option>
               </select>
@@ -17,21 +17,13 @@
             </div>         
             
             <div class="form-group row">
-                <label for="idLocal" class="col-md-4">Local</label>
-                <select id="idLocal" class="form-control form-control-sm col-md-8" required
-                     name="locales" #locales1="ngModel" [(ngModel)] = "contrato.locales">
-                      <option *ngFor="let item of locales" [ngValue]="item">{{item.descripcion}}</option>
-                </select>
-            </div>
-            <div *ngIf="locales1.invalid && (locales1.dirty || locales1.touched)" class="alert alert-danger">
-              <div *ngIf="locales1.errors.required">
-                Local es requerido.
-              </div>
+                <label for="idLocal" class="col-sm-12 col-md-2">Local</label>
+                <button data-toggle="modal" data-target="#exampleModal2" data-whatever="@mdo">Agregar Local</button>
             </div>
     
             <div class="form-group row">
-              <label for="idCostoAlq" class="col-md-4">Costo Alquiler</label>
-              <input id="idCostoAlq" class="form-control form-control-sm col-md-8" required
+              <label for="idCostoAlq" class="col-sm-12 col-md-2">Costo Alquiler</label>
+              <input id="idCostoAlq" class="form-control col-sm-12 col-md-8" required
                     type="number" name="costoTotalAlq" #costoTotalAlq="ngModel" [(ngModel)]="contrato.costoTotalAlq"/>
             </div>
             <div *ngIf="costoTotalAlq.invalid && (costoTotalAlq.dirty || costoTotalAlq.touched)" class="alert alert-danger">
@@ -41,8 +33,8 @@
             </div>         
     
             <div class="form-group row">
-                <label for="idFecha" class="col-md-4">Fecha</label>
-                <input id="idFecha" class="form-control form-control-sm col-md-8" required
+                <label for="idFecha" class="col-sm-12 col-md-2">Fecha</label>
+                <input id="idFecha" class="form-control col-sm-12 col-md-8" required
                     type="date" name="fecha" #fecha="ngModel" [(ngModel)]="contrato.fecha"/>
               </div>
               <div *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)" class="alert alert-danger">
@@ -57,8 +49,10 @@
                 <button class="btn btn-secondary ml-2 mr-2" (click)="modificarcontrato()"><i class="fas fa-save fal"></i> Modificar</button>            
                 <button class="btn btn-secondary ml-2 mr-2"  (click)="limpiarcontrato()"><i class="fas fa-brush"></i> Limpiar</button>
             </div>
+          </div>
         </form>
-        <table class="table" id="tabla" >
+        <div class="row"><h3 class="alert alert-primary col-12 text-center">Listado de Contratos</h3></div>        
+        <table class="table table-dark" id="tabla" >
             <thead>
               <tr>
                 <th scope="col">Propietario</th>
@@ -70,12 +64,13 @@
             <tbody>
               <tr *ngFor="let variable of contratos">
                <th scope="row">{{variable.propietario.apellido}}</th>
-                <td scope="row">{{variable.local}}</td> 
+                <td scope="row"><p *ngFor="let item of variable.locales" >{{item.descripcion}} </td> 
                 <td scope="row">{{variable.costoTotalAlq}}</td>
-                <td scope="row">{{variable.fecha | date:'dd/MM/yyyy'}}</td>
+                <td scope="row">{{variable.fecha | date:'yyyy-MM-dd'}}</td>
                 <td> 
                   <button class="btn btn-primary" (click)="elegircontrato(variable)">Seleccionar</button>
                   <button class="btn btn-primary" (click)="borrarcontrato(variable)">Borrar</button>
+                  <button class="btn btn-primary" (click)="Print()">Imprimir pdf</button>
                 </td>
               </tr>
             </tbody>
@@ -83,18 +78,31 @@
     </div>
 </div>
 
-<!-- <div class="my bg">
-    <div class="container">
-        <div class="row pt-5">
-            <div class="col-md-6 offset-md-3">
-                <div class="text-center">
-                    <button class="btn"></button>
-                    <button class="btn btn-outline-success mx-3" (click)="mensajeExito()">Éxito</button>
-                    <button class="btn btn-outline-danger mx-3"(click)="mensajeError()">Error</button>
-                    <button class="btn btn-outline-info mx-3" (click)="mensajeInformacion()">Información</button>
-                    <button class="btn btn-outline-warning mx-3" (click)="mensajeAdvertencia()">Advertencia</button>
-                </div>
-            </div>
-        </div>
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Formulario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="text-mensaje3" class="col-form-label">dni</label>
+            <select id="idLocal" class="form-control form-control-sm col-md-8" required multiple
+            name="locales" #locales1="ngModel" [(ngModel)] = "local">
+             <option *ngFor="let item of locales" [ngValue]="item">{{item.descripcion}}</option>
+            </select>
+          </div>
+          
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cancelar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)= "guardarLocal()">Guardar</button>
+      </div>
     </div>
-</div> -->
+  </div>
+</div>
